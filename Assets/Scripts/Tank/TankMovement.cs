@@ -20,7 +20,7 @@ public class TankMovement : MonoBehaviour
     private bool m_Moving;
 
     private Vector3 up, left, right, down;
-
+    private Vector3 m_CurrentDirection;
 
     private void Awake()
     {
@@ -68,36 +68,30 @@ public class TankMovement : MonoBehaviour
 
         EngineAudio();
 
-        if (Input.GetButtonDown(m_HorizontalAxisName))
+        if (Input.GetButton(m_HorizontalAxisName))
         {
             if (Input.GetAxisRaw(m_HorizontalAxisName) > 0)
             {
-                Debug.Log("Right button pressed");
-                transform.eulerAngles = right;
+                m_CurrentDirection = right;
             }
-            else
+            if (Input.GetAxisRaw(m_HorizontalAxisName) < 0)
             {
-                Debug.Log("Left button pressed");
-                transform.eulerAngles = left;
+                m_CurrentDirection = left;
             }
+            
+            m_Moving = true;
         }
 
-        if (Input.GetButtonDown(m_VerticalAxisName))
+        if (Input.GetButton(m_VerticalAxisName))
         {
             if (Input.GetAxisRaw(m_VerticalAxisName) > 0)
             {
-                Debug.Log("Up button pressed");
-                transform.eulerAngles = up;
+                m_CurrentDirection = up;
             }
-            else
+            if (Input.GetAxisRaw(m_VerticalAxisName) < 0)
             {
-                Debug.Log("Down button pressed");
-                transform.eulerAngles = down;
+                m_CurrentDirection = down;
             }
-        }
-
-        if (Input.GetButton(m_HorizontalAxisName) || Input.GetButton(m_VerticalAxisName))
-        {
             m_Moving = true;
         }
 
@@ -138,6 +132,7 @@ public class TankMovement : MonoBehaviour
         // Move and turn the tank.
         if (m_Moving)
         {
+            Turn();
             Move();
         }
     }
@@ -156,10 +151,6 @@ public class TankMovement : MonoBehaviour
     private void Turn()
     {
         // Adjust the rotation of the tank based on the player's input.
-        //float turn = m_HorizontalInputValue * m_TurnSpeed * Time.deltaTime;
-
-        //Quaternion turnRotation = Quaternion.Euler(0.0f, turn, 0.0f);
-
-        //m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
+        transform.eulerAngles = m_CurrentDirection;
     }
 }
