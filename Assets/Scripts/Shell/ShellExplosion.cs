@@ -32,7 +32,7 @@ public class ShellExplosion : MonoBehaviour
 
             targetRigidbody.AddExplosionForce(m_ExplosionForce, transform.position, m_ExplosionRadius);
 
-            TankHealth targetHealth = targetRigidbody.GetComponent<TankHealth>();
+            PlayerHealth targetHealth = targetRigidbody.GetComponent<PlayerHealth>();
 
             if (!targetHealth) continue;
 

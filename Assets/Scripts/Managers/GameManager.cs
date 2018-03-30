@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
         m_EndWait = new WaitForSeconds(m_EndDelay);
 
         SpawnAllTanks();
+
         SetCameraTargets();
 
         StartCoroutine(GameLoop());
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
                 Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
             m_Tanks[i].m_PlayerNumber = i + 1;
             m_Tanks[i].Setup();
+            m_Tanks[i].m_Instance.SetActive(false);
         }
     }
 

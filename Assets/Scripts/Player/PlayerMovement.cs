@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TankMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public int m_PlayerNumber = 1;         
     public float m_Speed = 12f;            
@@ -47,7 +47,10 @@ public class TankMovement : MonoBehaviour
         m_VerticalAxisName = "Vertical" + m_PlayerNumber;
         m_HorizontalAxisName = "Horizontal" + m_PlayerNumber;
 
-        m_OriginalPitch = m_MovementAudio.pitch;
+        if (m_MovementAudio)
+        {
+            m_OriginalPitch = m_MovementAudio.pitch;
+        }
 
         transform.rotation = Camera.main.transform.rotation;
         up = new Vector3(0, transform.eulerAngles.y, 0);
@@ -105,6 +108,10 @@ public class TankMovement : MonoBehaviour
 
     private void EngineAudio()
     {
+        if (!m_EngineDriving || !m_EngineIdling || !m_MovementAudio)
+        {
+            return;
+        }
         // Play the correct audio clip based on whether or not the tank is moving and what audio is currently playing.
         if (Mathf.Abs(m_VerticalInputValue) < 0.1f && Mathf.Abs(m_HorizontalInputValue) < 0.1f)
         {
