@@ -31,7 +31,7 @@ public class Portal : MonoBehaviour
 
         if (currentStayTime >= delayTime)
         {
-            other.gameObject.transform.position = otherPortal.transform.position;
+            other.gameObject.GetComponent<Rigidbody>().position = otherPortal.transform.position;
             currentStayTime = 0.0f;
         }
     }
