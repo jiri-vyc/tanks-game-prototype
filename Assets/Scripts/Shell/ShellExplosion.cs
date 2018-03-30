@@ -22,6 +22,11 @@ public class ShellExplosion : MonoBehaviour
     {
         // Find all the tanks in an area around the shell and damage them.
 
+        if (other.gameObject.tag == "Pickable")
+        {
+            return;
+        }
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, m_ExplosionRadius, m_TankMask);
 
         for (int i = 0; i < colliders.Length; i++)

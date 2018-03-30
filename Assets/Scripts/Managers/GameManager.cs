@@ -11,9 +11,11 @@ public class GameManager : MonoBehaviour
     public CameraControl m_CameraControl;   
     public Text m_MessageText;              
     public GameObject m_TankPrefab;         
-    public TankManager[] m_Tanks;           
+    public TankManager[] m_Tanks;
+    public GameObject[] m_RandomBonusesToSpawn;
 
-
+    private float m_spawnTime;
+    private float time = 0.0f;
     private int m_RoundNumber;              
     private WaitForSeconds m_StartWait;     
     private WaitForSeconds m_EndWait;       
@@ -26,6 +28,8 @@ public class GameManager : MonoBehaviour
         m_StartWait = new WaitForSeconds(m_StartDelay);
         m_EndWait = new WaitForSeconds(m_EndDelay);
 
+        SetRandomTime();
+
         SpawnAllTanks();
 
         SetCameraTargets();
@@ -33,13 +37,17 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GameLoop());
     }
 
+    void SetRandomTime()
+    {
+        m_spawnTime = Random.Range(0, 20);
+    }
 
     private void SpawnAllTanks()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
         {
             m_Tanks[i].m_Instance =
-                Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
+                Instantiate(m_TankPrefab, new Vector3(0,-15f,0), m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
             m_Tanks[i].m_PlayerNumber = i + 1;
             m_Tanks[i].Setup();
             m_Tanks[i].m_Instance.SetActive(false);
@@ -79,8 +87,6 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator RoundStarting()
     {
-        ResetAllTanks();
-
         DisableTankControl();
 
         m_CameraControl.SetStartPositionAndSize();
@@ -95,6 +101,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator RoundPlaying()
     {
+        ResetAllTanks();
+
         EnableTankControl();
 
         m_MessageText.text = string.Empty;
@@ -212,6 +220,30 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < m_Tanks.Length; i++)
         {
             m_Tanks[i].DisableControl();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        time += Time.deltaTime;
+        if (time >= m_spawnTime)
+        {
+            SpawnPickableWeapon();
+            SetRandomTime();
+            time = 0;
+        }
+    }
+
+    private void SpawnPickableWeapon()
+    {
+        int randomSpawnX = Random.Range(-45, 45);
+        int randomSpawnZ = Random.Range(-45, 45);
+        Vector3 randomPosition = new Vector3(randomSpawnX, 2.5f, randomSpawnZ);
+        int randomBonus = Random.Range(0, m_RandomBonusesToSpawn.Length);
+        if (!Physics.CheckSphere(randomPosition, 1.0f))
+        {
+            randomPosition.y = 0.86f;
+            GameObject bonus = Instantiate(m_RandomBonusesToSpawn[randomBonus], randomPosition, Quaternion.Euler(0.0f, 45.0f, 0.0f)) as GameObject;
         }
     }
 }

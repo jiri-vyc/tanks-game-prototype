@@ -19,6 +19,7 @@ public abstract class GunShooting : MonoBehaviour {
     {
         m_PlayerNumber = GetComponentInParent<PlayerGunControl>().m_playerNumber;
         m_FireButton = "Fire" + m_PlayerNumber;
+        m_timer = m_TimeBetweenShots + 0.01f;
     }
 
     protected void Update()

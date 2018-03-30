@@ -13,18 +13,18 @@ public class TankManager
 
 
     private PlayerMovement m_Movement;       
-    private PlayerGunControl m_GunSwitching;
+    private PlayerGunControl m_GunControl;
     private GameObject m_CanvasGameObject;
 
 
     public void Setup()
     {
         m_Movement = m_Instance.GetComponent<PlayerMovement>();
-        m_GunSwitching = m_Instance.GetComponentInChildren<PlayerGunControl>();
+        m_GunControl = m_Instance.GetComponentInChildren<PlayerGunControl>();
         m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
 
         m_Movement.m_PlayerNumber = m_PlayerNumber;
-        m_GunSwitching.m_playerNumber = m_PlayerNumber;
+        m_GunControl.m_playerNumber = m_PlayerNumber;
 
         m_ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(m_PlayerColor) + ">PLAYER " + m_PlayerNumber + "</color>";
 
@@ -40,7 +40,7 @@ public class TankManager
     public void DisableControl()
     {
         m_Movement.enabled = false;
-        m_GunSwitching.enabled = false;
+        m_GunControl.enabled = false;
 
         m_CanvasGameObject.SetActive(false);
     }
@@ -49,7 +49,7 @@ public class TankManager
     public void EnableControl()
     {
         m_Movement.enabled = true;
-        m_GunSwitching.enabled = true;
+        m_GunControl.enabled = true;
 
         m_CanvasGameObject.SetActive(true);
     }
@@ -59,6 +59,7 @@ public class TankManager
     {
         m_Instance.transform.position = m_SpawnPoint.position;
         m_Instance.transform.rotation = m_SpawnPoint.rotation;
+        m_GunControl.Reset();
 
         m_Instance.SetActive(false);
         m_Instance.SetActive(true);

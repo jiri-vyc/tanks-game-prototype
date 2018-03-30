@@ -108,7 +108,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ee4e6579e147ae45bf6764f942bee5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Damage: 100
+  m_Damage: 30
+  m_TransparentFxMask:
+    serializedVersion: 2
+    m_Bits: 2
 --- !u!136 &136933566337669760
 CapsuleCollider:
   m_ObjectHideFlags: 1

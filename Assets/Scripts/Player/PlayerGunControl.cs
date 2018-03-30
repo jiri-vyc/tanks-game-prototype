@@ -17,9 +17,8 @@ public class PlayerGunControl : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        DeselectAllWeapons();
-        SelectWeapon(PlayerGunControl.BASIC_GUN);
         m_playerSwitchButton = "Switch" + m_playerNumber;
+        Reset();
     }
 
     // Update is called once per frame
@@ -64,6 +63,22 @@ public class PlayerGunControl : MonoBehaviour {
     {
         m_pickedWeapons[weaponPickedUp] = true;
         SelectWeapon(weaponPickedUp);
+    }
+
+    public void Reset()
+    {
+        DropAllWeapons();
+        m_pickedWeapons[0] = true;
+        DeselectAllWeapons();
+        SelectWeapon(PlayerGunControl.BASIC_GUN);
+    }
+
+    public void DropAllWeapons()
+    {
+        for (int i = 0; i < m_pickedWeapons.Length; i++)
+        {
+            m_pickedWeapons[i] = false;
+        }
     }
 
 }

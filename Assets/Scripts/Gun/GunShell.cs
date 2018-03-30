@@ -21,6 +21,11 @@ public class GunShell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "Pickable")
+        {
+            return;
+        }
+
         Rigidbody targetRigidbody = other.GetComponent<Rigidbody>();
 
         for (int i = 0; i < 1; i++)
