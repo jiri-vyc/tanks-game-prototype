@@ -9,8 +9,8 @@ InputManager:
     m_Name: HorizontalUI
     descriptiveName: Horizontal keyboard axis for UI
     descriptiveNegativeName: 
-    negativeButton: a
-    positiveButton: d
+    negativeButton: left
+    positiveButton: right
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -25,8 +25,8 @@ InputManager:
     m_Name: VerticalUI
     descriptiveName: Vertical keyboard axis for UI
     descriptiveNegativeName: 
-    negativeButton: s
-    positiveButton: w
+    negativeButton: 
+    positiveButton: up
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
